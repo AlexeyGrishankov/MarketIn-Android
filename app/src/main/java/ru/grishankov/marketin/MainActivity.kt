@@ -21,7 +21,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            val navController by rememberNavController(startDestination = ScreenRoute.ScreenAppList)
+            val navController by rememberNavController(startDestination = ScreenRoute.ScreenLaunch)
             MarketInTheme {
                 // A surface container using the "background" color from the theme
                 Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background) {

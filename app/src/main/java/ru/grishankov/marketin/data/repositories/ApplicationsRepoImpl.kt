@@ -3,6 +3,8 @@ package ru.grishankov.marketin.data.repositories
 import kotlinx.coroutines.flow.flow
 import ru.grishankov.marketin.data.dto.AppDataDto
 import ru.grishankov.marketin.data.dto.AppShortDataListDto
+import ru.grishankov.marketin.data.dto.MarketUpdate
+import ru.grishankov.marketin.data.dto.MarketUpdateReq
 import ru.grishankov.marketin.data.sources.ApplicationsDataSources
 import ru.grishankov.marketin.util.extension.emitFlow
 import ru.grishankov.marketin.util.network.ErrorApp
@@ -30,6 +32,23 @@ class ApplicationsRepoImpl(private val source: ApplicationsDataSources) : Applic
 
     override suspend fun getAppData(appId: Int): FlowResponse<AppDataDto> = flow {
         source.getAppData(appId).handling(
+            onOk = {
+                emitFlow { FlowData(data = data) }
+            },
+            onApiError = {
+                emitFlow { FlowData(error = error) }
+            },
+            onNetworkError = {
+                emitFlow { FlowData(error = ErrorApp.ErrorNetwork) }
+            },
+            onUnknownError = {
+                emitFlow { FlowData(error = ErrorApp.ErrorUnknown) }
+            }
+        )
+    }
+
+    override suspend fun getLastVersion(updateReq: MarketUpdateReq): FlowResponse<MarketUpdate> = flow {
+        source.getLastVersion(updateReq).handling(
             onOk = {
                 emitFlow { FlowData(data = data) }
             },
