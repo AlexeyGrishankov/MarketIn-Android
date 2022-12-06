@@ -195,7 +195,7 @@ class ScreenAppData(
                                             content = { Icon(imageVector = Download, contentDescription = null, tint = MainColor) }
                                         )
                                     }
-                                } else {
+                                } else if (appData.versions.isNotEmpty()) {
                                     Box(modifier = Modifier
                                         .clip(RoundedCornerShape(5.dp))
                                         .background(MainColor)
