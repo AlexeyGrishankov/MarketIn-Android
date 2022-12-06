@@ -100,7 +100,7 @@ class ScreenAppData(
 
         val removeResult = rememberLauncherForActivityResult(
             contract = ActivityResultContracts.StartActivityForResult(),
-            onResult = { viewModel.downloadApk(appData.versions.firstOrNull(), context, installResult) }
+            onResult = { viewModel.downloadApk(appData.lastVersion, context, installResult) }
         )
 
         Scaffold(
