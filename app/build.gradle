@@ -13,8 +13,9 @@ android {
         applicationId "ru.grishankov.marketin"
         minSdk 26
         targetSdk 33
-        versionCode 4
-        versionName "1.0.4"
+        versionCode VERSION_CODE.toInteger()
+        versionName = VERSION_MAJOR + "." + VERSION_MINOR + "." + VERSION_PATCH
+        archivesBaseName = "MarketIn"
 
         vectorDrawables {
             useSupportLibrary true
@@ -28,6 +29,16 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+        applicationVariants.all { variant ->
+            variant.outputs.all {
+                def type = variant.buildType.name
+                if (variant.buildType.name == "debug") {
+                    type = "dev"
+                }
+                outputFileName = "${archivesBaseName}-${variant.versionName}.apk"
+            }
+        }
+
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8

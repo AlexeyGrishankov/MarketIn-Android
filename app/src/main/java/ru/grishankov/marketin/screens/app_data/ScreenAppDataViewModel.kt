@@ -148,4 +148,10 @@ class ScreenAppDataViewModel(
             }
         }
     }
+
+    fun startApp(context: Context, packageManager: PackageManager, appData: AppDataDto) {
+        viewModelScope.launch {
+            packageManager.getLaunchIntentForPackage(appData.packageName)?.also { context.startActivity(it) }
+        }
+    }
 }

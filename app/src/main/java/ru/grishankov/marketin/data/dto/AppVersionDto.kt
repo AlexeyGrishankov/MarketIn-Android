@@ -10,4 +10,5 @@ data class AppVersionDto(
     val description: String,
     val url: String,
     val versionCode: Int,
+    val date: String,
 )

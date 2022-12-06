@@ -189,11 +189,20 @@ class ScreenAppData(
                                                 if (isNeedUpdate) {
                                                     viewModel.removeApp(appData, removeResult)
                                                 } else {
-                                                    viewModel.downloadApk(appData.versions.firstOrNull(), context, installResult)
+                                                    viewModel.downloadApk(appData.lastVersion, context, installResult)
                                                 }
                                             },
                                             content = { Icon(imageVector = Download, contentDescription = null, tint = MainColor) }
                                         )
+                                    }
+                                } else {
+                                    Box(modifier = Modifier
+                                        .clip(RoundedCornerShape(5.dp))
+                                        .background(MainColor)
+                                        .clickable { viewModel.startApp(context, packageManager, appData) }
+                                        .padding(8.dp)
+                                    ) {
+                                        Text(text = "Открыть", fontSize = 12.sp, color = Color.White)
                                     }
                                 }
                             }
@@ -248,7 +257,7 @@ class ScreenAppData(
                                                 }
                                             }
                                         } else {
-                                            items(appData.versions) { version ->
+                                            items(appData.versions.reversed()) { version ->
                                                 Column(
                                                     modifier = Modifier
                                                         .fillMaxWidth()
@@ -256,7 +265,7 @@ class ScreenAppData(
                                                 ) {
                                                     Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
                                                         Text(text = version.title)
-                                                        Text(text = "06.12.2022", color = GrayText, fontSize = 12.sp)
+                                                        Text(text = version.date, color = GrayText, fontSize = 12.sp)
                                                     }
                                                     Text(text = version.description, color = GrayText, fontSize = 10.sp)
                                                 }
